@@ -22,24 +22,25 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(80)
+  puts "-------------".center(80)
 end
 
 def print(students)
   i = 0
   while i < students.length do
     if students[i][:name].chr.upcase == 'S' && students[i][:name].length < 12
-      puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort),
-      hobbies inlcude #{students[i][:hobby]}, they are from #{students[i][:country]}
-      and are #{students[i][:height]} tall!"
+      puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)".center(80)
+      puts "Hobbies inlcude #{students[i][:hobby]}".center(80)
+      puts "From #{students[i][:country]}".center(80)
+      puts "#{students[i][:height]} tall".center(80)
     end
     i += 1
    end
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students".center(80)
 end
 
 students = input_students
