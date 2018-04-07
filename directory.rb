@@ -1,19 +1,18 @@
-#Let's put all students into an array
 def input_students
-  puts "Please enter the names of the students, aswell as their hobbies, country of origin, and hieght."
+  puts "Please enter the names of the students, aswell as a hobby of theirs, their country of origin, and height."
   puts "To finish, just hit return twice"
   students = []
   while true do
-  puts "name?"
+  puts "What is their name?"
   name = gets.chomp
     if name.empty?
       break
     end
-  puts "hobby?"
+  puts "What is a hobby of theirs?"
   hobby = gets.chomp
-  puts "Country of origin?"
+  puts "What is their country of origin?"
   country = gets.chomp
-  puts "height?"
+  puts "What is their height?"
   height = gets.chomp
   students << {name: name, cohort: :november, hobby: hobby, country: country,
   height: height}
@@ -28,21 +27,21 @@ def print_header
 end
 
 def print(students)
-  count = 0
-  while count < students.length do
-    if students[count][:name].chr.upcase == 'S' && students[count][:name].length < 12
-      puts "#{count + 1}. #{students[count][:name]} (#{students[count][:cohort]} cohort),
-      hobbies inlcude #{students[count][:hobby]}, they are from #{students[count][:country]}
-      and are #{students[count][:height]} tall!"
+  i = 0
+  while i < students.length do
+    if students[i][:name].chr.upcase == 'S' && students[i][:name].length < 12
+      puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort),
+      hobbies inlcude #{students[i][:hobby]}, they are from #{students[i][:country]}
+      and are #{students[i][:height]} tall!"
     end
-    count += 1
+    i += 1
    end
 end
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
-#Nothing happens until we call the methods
+
 students = input_students
 print_header
 print(students)
