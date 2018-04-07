@@ -9,7 +9,7 @@ def input_students
       break
     end
   puts "What is their cohort month?"
-  cohort = gets.chomp
+  cohort = gets.chomp.capitalize
   puts "What is a hobby of theirs?"
   hobby = gets.chomp
   puts "What is their country of origin?"
@@ -29,6 +29,20 @@ end
 def print_header
   puts "The students of Villains Academy".center(80)
   puts "-------------".center(80)
+end
+
+def print_by_cohort(students)
+  cohorts = students.map do |student|
+    student[:cohort]
+  end
+  cohorts.uniq.each do |cohort|
+    puts "#{cohort} cohort: "
+    students.each do |student|
+      if student[:cohort].to_s == cohort
+        puts student[:name]
+      end
+    end
+  end
 end
 
 def print(students)
@@ -51,4 +65,5 @@ end
 students = input_students
 print_header
 print(students)
+print_by_cohort(students)
 print_footer(students)
