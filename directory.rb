@@ -1,5 +1,5 @@
 def input_students
-  puts "Please enter the names of the students, aswell as a hobby of theirs, their country of origin, and height."
+  puts "Please enter the names of the students, aswell as their cohort, a hobby of theirs, their country of origin, and height."
   puts "To finish, just hit return twice"
   students = []
   while true do
@@ -8,13 +8,18 @@ def input_students
     if name.empty?
       break
     end
+  puts "What is their cohort month?"
+  cohort = gets.chomp
   puts "What is a hobby of theirs?"
   hobby = gets.chomp
   puts "What is their country of origin?"
   country = gets.chomp
   puts "What is their height?"
   height = gets.chomp
-  students << {name: name, cohort: :november, hobby: hobby, country: country,
+  if cohort.empty?
+    cohort = "november"
+  end
+  students << {name: name, cohort: cohort.to_s, hobby: hobby, country: country,
   height: height}
   puts "Now we have #{students.count} students"
   end
