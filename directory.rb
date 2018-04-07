@@ -11,18 +11,22 @@ def input_students
   end
   students
 end
+
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
+
 def print(students)
-  students.each_with_index do |student, index|
-    if student[:name][0].upcase == 'S' && student[:name].length < 12
-      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
-    else
+  count = 0
+  while count < students.length do
+    if students[count][:name].chr.upcase == 'S' && students[count][:name].length < 12
+      puts "#{count + 1}. #{students[count][:name]} (#{students[count][:cohort]} cohort)"
     end
-  end
+    count += 1
+   end
 end
+
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
