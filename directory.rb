@@ -17,11 +17,11 @@ def input_students
   puts "What is their height?"
   height = gets.chomp
   if cohort.empty?
-    cohort = "november"
+    cohort = "November"
   end
   students << {name: name, cohort: cohort.to_s, hobby: hobby, country: country,
   height: height}
-  puts "Now we have #{students.count} students"
+  puts "Now we have #{students.count} " + (students.count > 1 ? "students" : "student")
   end
   students
 end
