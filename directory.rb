@@ -1,5 +1,14 @@
 @students = []
 
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "3. Print the students by cohort"
+  puts "4. Save the list to students.csv"
+  puts "5  Load the list from students.csv"
+  puts "9. Exit"
+end
+
 def input_students
   puts "Please enter the names of the students, aswell as their cohort, a hobby of theirs, their country of origin, and height."
   puts "To finish, just hit return twice"
@@ -26,25 +35,15 @@ def input_students
   end
 end
 
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
 def print_header
   puts "The students of Villains Academy".center(80)
   puts "-------------".center(80)
-end
-
-def print_by_cohort
-  if !@students.empty?
-    cohorts = @students.map do |student|
-      student[:cohort]
-    end
-    cohorts.uniq.each do |cohort|
-      puts "#{cohort} cohort: "
-      @students.each do |student|
-        if student[:cohort].to_s == cohort
-          puts student[:name]
-        end
-      end
-    end
-  end
 end
 
 def print_students_list
@@ -66,18 +65,39 @@ def print_footer
   puts ("Overall, we have #{@students.count} great " + (@students.count == 1 ? "student" : "students")).center(80)
 end
 
-def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Print the students by cohort"
-  puts "4. Save the list to students.csv"
-  puts "9. Exit"
+def print_by_cohort
+  if !@students.empty?
+    cohorts = @students.map do |student|
+      student[:cohort]
+    end
+    cohorts.uniq.each do |cohort|
+      puts "#{cohort} cohort: "
+      @students.each do |student|
+        if student[:cohort].to_s == cohort
+          puts student[:name]
+        end
+      end
+    end
+  end
 end
 
-def show_students
-  print_header
-  print_students_list
-  print_footer
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort], student[:hobby], student[:country], student[:height]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
+
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+    name, cohort, hobby, country, height = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym, hobby: hobby, country: country, height: height}
+  end
+  file.close
 end
 
 def process(selection)
@@ -90,21 +110,13 @@ def process(selection)
       print_by_cohort
     when "4"
       save_students
+    when "5"
+      load_students
     when "9"
       exit
     else
       puts "I don't know what you meant, try again"
   end
-end
-
-def save_students
-  file = File.open("students.csv", "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:hobby], student[:country], student[:height]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
 end
 
 def interactive_menu
