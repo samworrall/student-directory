@@ -14,18 +14,18 @@ def input_students
   puts "To finish, just hit return twice"
   while true do
   puts "What is their name?"
-  name = gets.delete("\n")
+  name = STDIN.gets.delete("\n")
     if name.empty?
       break
     end
   puts "What is their cohort month?"
-  cohort = gets.delete("\n").capitalize
+  cohort = STDIN.gets.delete("\n").capitalize
   puts "What is a hobby of theirs?"
-  hobby = gets.delete("\n")
+  hobby = STDIN.gets.delete("\n")
   puts "What is their country of origin?"
-  country = gets.delete("\n")
+  country = STDIN.gets.delete("\n")
   puts "What is their height?"
-  height = gets.delete("\n")
+  height = STDIN.gets.delete("\n")
   if cohort.empty?
     cohort = "November"
   end
@@ -68,7 +68,7 @@ end
 def print_by_cohort
   if !@students.empty?
     cohorts = @students.map do |student|
-      student[:cohort]
+      student[:cohort].to_s 
     end
     cohorts.uniq.each do |cohort|
       puts "#{cohort} cohort: "
@@ -91,13 +91,25 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, hobby, country, height = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym, hobby: hobby, country: country, height: height}
   end
   file.close
+end
+
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
 end
 
 def process(selection)
@@ -122,8 +134,9 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
+try_load_students
 interactive_menu
