@@ -4,18 +4,18 @@ def input_students
   students = []
   while true do
   puts "What is their name?"
-  name = gets.chomp
+  name = gets.strip
     if name.empty?
       break
     end
   puts "What is their cohort month?"
-  cohort = gets.chomp.capitalize
+  cohort = gets.strip.capitalize
   puts "What is a hobby of theirs?"
-  hobby = gets.chomp
+  hobby = gets.strip
   puts "What is their country of origin?"
-  country = gets.chomp
+  country = gets.strip
   puts "What is their height?"
-  height = gets.chomp
+  height = gets.strip
   if cohort.empty?
     cohort = "November"
   end
