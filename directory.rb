@@ -1,7 +1,8 @@
+@students = []
+
 def input_students
   puts "Please enter the names of the students, aswell as their cohort, a hobby of theirs, their country of origin, and height."
   puts "To finish, just hit return twice"
-  students = []
   while true do
   puts "What is their name?"
   name = gets.delete("\n")
@@ -19,11 +20,10 @@ def input_students
   if cohort.empty?
     cohort = "November"
   end
-  students << {name: name, cohort: cohort.to_s, hobby: hobby, country: country,
+  @students << {name: name, cohort: cohort.to_s, hobby: hobby, country: country,
   height: height}
-  puts "Now we have #{students.count} " + (students.count > 1 ? "students" : "student")
+  puts "Now we have #{@students.count} " + (@students.count > 1 ? "students" : "student")
   end
-  students
 end
 
 def print_header
@@ -31,14 +31,14 @@ def print_header
   puts "-------------".center(80)
 end
 
-def print_by_cohort(students)
-  if !students.empty?
-    cohorts = students.map do |student|
+def print_by_cohort
+  if !@students.empty?
+    cohorts = @students.map do |student|
       student[:cohort]
     end
     cohorts.uniq.each do |cohort|
       puts "#{cohort} cohort: "
-      students.each do |student|
+      @students.each do |student|
         if student[:cohort].to_s == cohort
           puts student[:name]
         end
@@ -47,53 +47,58 @@ def print_by_cohort(students)
   end
 end
 
-def print(students)
+def print_students_list
   i = 0
-  while i < students.length do
-    if students.empty?
+  while i < @students.length do
+    if @students.empty?
       break
-    elsif students[i][:name].chr.upcase == 'S' && students[i][:name].length < 12
-      puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)".center(80)
-      puts "Hobbies inlcude #{students[i][:hobby]}".center(80)
-      puts "From #{students[i][:country]}".center(80)
-      puts "#{students[i][:height]} tall".center(80)
+    elsif @students[i][:name].chr.upcase == 'S' && @students[i][:name].length < 12
+      puts "#{i + 1}. #{@students[i][:name]} (#{@students[i][:cohort]} cohort)".center(80)
+      puts "Hobbies inlcude #{@students[i][:hobby]}".center(80)
+      puts "From #{@students[i][:country]}".center(80)
+      puts "#{@students[i][:height]} tall".center(80)
     end
     i += 1
    end
 end
 
-def print_footer(students)
-  puts ("Overall, we have #{students.count} great " + (students.count == 1 ? "student" : "students")).center(80)
+def print_footer
+  puts ("Overall, we have #{@students.count} great " + (@students.count == 1 ? "student" : "students")).center(80)
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "3. Print the students by cohort"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "3"
+      print_by_cohort
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant, try again"
+  end
 end
 
 def interactive_menu
-  students = []
   loop do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "3. Print the students by cohort"
-    puts "9. Exit"
-    selection = gets.chomp
-    case selection
-      when "1"
-        students = input_students
-      when "2"
-        print_header
-        print(students)
-        print_footer(students)
-      when "3"
-        print_by_cohort(students)
-      when "9"
-        exit
-      else
-        puts "I don't know what you meant, try again"
-    end
+    print_menu
+    process(gets.chomp)
   end
 end
 
 interactive_menu
-#students = input_students
-#print_header
-#print(students)
-#print_by_cohort(students)
-#print_footer(students)
