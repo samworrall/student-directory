@@ -32,14 +32,16 @@ def print_header
 end
 
 def print_by_cohort(students)
-  cohorts = students.map do |student|
-    student[:cohort]
-  end
-  cohorts.uniq.each do |cohort|
-    puts "#{cohort} cohort: "
-    students.each do |student|
-      if student[:cohort].to_s == cohort
-        puts student[:name]
+  if !students.empty?
+    cohorts = students.map do |student|
+      student[:cohort]
+    end
+    cohorts.uniq.each do |cohort|
+      puts "#{cohort} cohort: "
+      students.each do |student|
+        if student[:cohort].to_s == cohort
+          puts student[:name]
+        end
       end
     end
   end
@@ -48,7 +50,9 @@ end
 def print(students)
   i = 0
   while i < students.length do
-    if students[i][:name].chr.upcase == 'S' && students[i][:name].length < 12
+    if students.empty?
+      break
+    elsif students[i][:name].chr.upcase == 'S' && students[i][:name].length < 12
       puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)".center(80)
       puts "Hobbies inlcude #{students[i][:hobby]}".center(80)
       puts "From #{students[i][:country]}".center(80)
@@ -59,7 +63,7 @@ def print(students)
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(80)
+  puts ("Overall, we have #{students.count} great " + (students.count == 1 ? "student" : "students")).center(80)
 end
 
 students = input_students
