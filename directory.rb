@@ -14,18 +14,18 @@ def input_students
   puts "To finish, just hit return twice"
   while true do
   puts "What is their name?"
-  name = STDIN.gets.delete("\n")
+  name = STDIN.gets.chomp
     if name.empty?
       break
     end
   puts "What is their cohort month?"
-  cohort = STDIN.gets.delete("\n").capitalize
+  cohort = STDIN.gets.chomp.capitalize
   puts "What is a hobby of theirs?"
-  hobby = STDIN.gets.delete("\n")
+  hobby = STDIN.gets.chomp
   puts "What is their country of origin?"
-  country = STDIN.gets.delete("\n")
+  country = STDIN.gets.chomp
   puts "What is their height?"
-  height = STDIN.gets.delete("\n")
+  height = STDIN.gets.chomp
   if cohort.empty?
     cohort = "November"
   end
@@ -116,18 +116,13 @@ def try_load_students
   end
 end
 
-def process(selection)
+def choice(selection)
   case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      print_by_cohort
-    when "4"
-      save_students
-    when "5"
-      load_students
+    when "1" then input_students
+    when "2" then show_students
+    when "3" then print_by_cohort
+    when "4" then save_students
+    when "5" then load_students
     when "9"
       exit
     else
@@ -138,7 +133,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(STDIN.gets.chomp)
+    choice(STDIN.gets.chomp)
   end
 end
 
