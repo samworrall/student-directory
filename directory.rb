@@ -118,12 +118,17 @@ end
 
 def choice(selection)
   case selection
-    when "1" then input_students
-    when "2" then show_students
-    when "3" then print_by_cohort
-    when "4" then save_students
-    when "5" then load_students
-    when "9"
+    when "1" then puts "Loading list"
+      input_students
+    when "2" then puts "Showing students"
+      show_students
+    when "3" then puts "Showing students by cohort"
+      print_by_cohort
+    when "4" then puts "Saving students"
+      save_students
+    when "5" then puts "Loading students"
+      load_students
+    when "9" then puts "Closing program"
       exit
     else
       puts "I don't know what you meant, try again"
