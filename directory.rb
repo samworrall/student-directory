@@ -29,10 +29,13 @@ def input_students
   if cohort.empty?
     cohort = "November"
   end
-  @students << {name: name, cohort: cohort.to_s, hobby: hobby, country: country,
-  height: height}
+  add_students(name, cohort, hobby, country, height)
   puts "Now we have #{@students.count} " + (@students.count > 1 ? "students" : "student")
   end
+end
+
+def add_students(name, cohort, hobby, country, height)
+  @students << {name: name, cohort: cohort.to_sym, hobby: hobby, country: country, height: height}
 end
 
 def show_students
@@ -68,7 +71,7 @@ end
 def print_by_cohort
   if !@students.empty?
     cohorts = @students.map do |student|
-      student[:cohort].to_s 
+      student[:cohort].to_s
     end
     cohorts.uniq.each do |cohort|
       puts "#{cohort} cohort: "
@@ -95,7 +98,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, hobby, country, height = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym, hobby: hobby, country: country, height: height}
+    add_students(name, cohort, hobby, country, height)
   end
   file.close
 end
