@@ -4,8 +4,8 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Print the students by cohort"
-  puts "4. Save the list to students.csv"
-  puts "5  Load the list from students.csv"
+  puts "4. Save the list"
+  puts "5  Load the list"
   puts "9. Exit"
 end
 
@@ -85,13 +85,30 @@ def print_by_cohort
 end
 
 def save_students
-  file = File.open("students.csv", "w")
+  puts "Which file do you want to save to? Press enter again to save to default."
+  save_file = STDIN.gets.chomp
+  if save_file.empty? || !File.exist?(save_file)
+    save_file = "students.csv"
+  end
+  file = File.open(save_file, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:hobby], student[:country], student[:height]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
+end
+
+def ask_for_load_file
+  puts "Which file would you like to load from? Press enter again to load from default."
+  file = STDIN.gets.chomp
+  if !file.empty? && File.exist?(file)
+    puts "Loading from specified file"
+    load_students(file)
+  else
+    puts "Loading from students.csv file"
+    load_students
+  end
 end
 
 def load_students(filename = "students.csv")
@@ -126,8 +143,7 @@ def choice(selection)
       print_by_cohort
     when "4" then puts "Saving students"
       save_students
-    when "5" then puts "Loading students"
-      load_students
+    when "5" then ask_for_load_file
     when "9" then puts "Closing program"
       exit
     else
