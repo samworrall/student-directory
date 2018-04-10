@@ -90,13 +90,13 @@ def save_students
   if save_file.empty? || !File.exist?(save_file)
     save_file = "students.csv"
   end
-  file = File.open(save_file, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:hobby], student[:country], student[:height]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open(save_file, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort], student[:hobby], student[:country], student[:height]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
 end
 
 def ask_for_load_file
@@ -112,12 +112,12 @@ def ask_for_load_file
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort, hobby, country, height = line.chomp.split(',')
-    add_students(name, cohort, hobby, country, height)
+  File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort, hobby, country, height = line.chomp.split(',')
+      add_students(name, cohort, hobby, country, height)
+    end
   end
-  file.close
 end
 
 def try_load_students
@@ -141,7 +141,7 @@ def choice(selection)
       show_students
     when "3" then puts "Showing students by cohort"
       print_by_cohort
-    when "4" then puts "Saving students"
+    when "4" then puts "Attempting to save students"
       save_students
     when "5" then ask_for_load_file
     when "9" then puts "Closing program"
